@@ -59,6 +59,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@auspost/postmaster-react": "~0.73.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
