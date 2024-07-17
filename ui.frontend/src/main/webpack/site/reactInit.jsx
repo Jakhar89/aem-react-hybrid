@@ -16,11 +16,12 @@ class ReactComponent extends HTMLElement {
   connectedCallback() {
     const props = this.dataset;
     const Component = COMPONENTS[props.component];
+    const properties = { classes: this.parentNode.className, ...props };
 
     if (Component !== undefined) {
       createRoot(this).render(
         <Suspense fallback={null}>
-          <Component {...props} />
+          <Component {...properties} />
         </Suspense>
       );
     }
