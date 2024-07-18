@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, Text } from "@auspost/postmaster-react";
+//import { Accordion, Text } from "@auspost/postmaster-react";
 
 const AemAccordion = (props) => {
   const args = {
@@ -7,7 +7,7 @@ const AemAccordion = (props) => {
     children: <Text variant="body">{props.text || "Loren Ipsum"}</Text>,
     icon: null,
   };
-  return <Accordion {...args} />;
+  return <div>{props.title}</div>;
 };
 
 export default AemAccordion;
