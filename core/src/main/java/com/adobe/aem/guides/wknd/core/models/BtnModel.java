@@ -26,6 +26,9 @@ public class BtnModel {
     @ValueMapValue
     private String btnText;
 
+    @ValueMapValue
+    private String btnType;
+
 
     @JsonIgnore
     private String json;
@@ -36,6 +39,7 @@ public class BtnModel {
     }
 
     public String getBtnText() { return this.btnText; }
+    public String getBtnType() { return this.btnType; }
 
     public String getJson() { return json; }
 }
