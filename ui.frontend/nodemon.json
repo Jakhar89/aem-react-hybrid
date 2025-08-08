@@ -1,0 +1,9 @@
+{
+    "exec": "babel-node --extensions .js,.jsx,.mjs --presets @babel/preset-env,@babel/preset-react src/server/bootstrap.mjs",
+    "watch": ["src/server/", "src/main/webpack/components/"],
+    "ext": "js,mjs,jsx",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "ignore": ["node_modules/", "dist/"]
+}

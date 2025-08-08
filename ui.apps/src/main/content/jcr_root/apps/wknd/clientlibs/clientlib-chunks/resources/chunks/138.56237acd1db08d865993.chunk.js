@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaem_maven_archetype=self.webpackChunkaem_maven_archetype||[]).push([[138],{138:function(e,t,n){n.r(t);var a=n(294);t.default=e=>{const t=JSON.parse(e.attribute);return a.createElement(a.Fragment,null,a.createElement("h1",null,"demo Content ",t.slingTitle||"World","!"),t.slingCheck&&a.createElement("h2",null,"Checkbox is true"))}}}]);

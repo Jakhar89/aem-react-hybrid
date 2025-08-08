@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaem_maven_archetype=self.webpackChunkaem_maven_archetype||[]).push([[577],{18:function(e,a,l){l.r(a);var n=l(294);a.default=e=>n.createElement("h1",null,"Hello ",e.name||"World","!")}}]);
