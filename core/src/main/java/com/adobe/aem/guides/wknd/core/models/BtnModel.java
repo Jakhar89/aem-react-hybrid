@@ -21,6 +21,7 @@ import com.adobe.aem.guides.wknd.core.services.RenderingService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.UUID;
 
 @Model(
     adaptables = {SlingHttpServletRequest.class, Resource.class},
@@ -46,6 +47,9 @@ public class BtnModel {
     @JsonIgnore
     private String json;
 
+    @Expose
+    private String uuid;
+
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private RenderingService reactSsrService;
 
@@ -56,6 +60,7 @@ public class BtnModel {
     @PostConstruct
     protected void init() {
         try {
+             this.uuid = UUID.randomUUID().toString();
             this.resourceType = currentResource.getResourceType();
             this.resourcePath = currentResource.getPath();
 

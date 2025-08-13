@@ -2,13 +2,12 @@ import React from "react";
 
 const Btn = (props) => {
     console.log(props);
-    return (
-        <>
-            <button variant='primary' size='medium' id={props.uniqID}>
-                {props.btnText} anything
-            </button>
-        </>
-    );
+
+    const handleClick = () => {
+        console.log("click working");
+    };
+
+    return <button onClick={handleClick}>{props.btnText}</button>;
 };
 
 export default Btn;

@@ -8,40 +8,30 @@ class ReactComponent extends HTMLElement {
     }
 
     connectedCallback() {
-        const uniqID = `${Date.now().toString(36)}-${Math.random()
-            .toString(36)
-            .replace(/[.]/g, "")}`;
-
         let props = JSON.parse(this.dataset.attribute || "{}");
         console.log("Client props:", props);
 
-        let checkElement = document.getElementById(this?.firstChild?.id);
+        let checkElement = document.getElementById(props.uuid);
         console.log("Existing element:", checkElement);
 
         const ComponentImporter = COMPONENTS[props.resourceType];
 
         if (ComponentImporter !== undefined) {
-            props = { ...props, uniqID: uniqID };
-
             // Load component dynamically
             ComponentImporter()
                 .then((componentModule) => {
                     const Component = componentModule.default;
 
-                    const componentElement = (
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Component {...props} />
-                        </Suspense>
-                    );
+                    const componentElement = <Component {...props} />;
 
-                    if (checkElement == null) {
-                        // No existing content - render fresh
-                        console.log("Rendering fresh component");
-                        createRoot(this).render(componentElement);
-                    } else {
+                    if (checkElement.innerHTML.trim() !== "") {
                         // Existing content - hydrate
                         console.log("Hydrating existing component");
                         hydrateRoot(this, componentElement);
+                    } else {
+                        // No existing content - render fresh
+                        console.log("Rendering fresh component");
+                        createRoot(this).render(componentElement);
                     }
                 })
                 .catch((error) => {

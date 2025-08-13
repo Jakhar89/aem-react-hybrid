@@ -8,10 +8,6 @@ const app = express();
 app.use(express.json());
 
 async function MyComponent(props) {
-    const uniqID = `${Date.now().toString(36)}-${Math.random()
-        .toString(36)
-        .replace(/[.]/g, "")}`;
-
     const componentImporter = COMPONENTS[props.resourceType];
     console.log("SSR props:", props);
     console.log("Available components:", Object.keys(COMPONENTS));
@@ -33,7 +29,7 @@ async function MyComponent(props) {
             }
             console.log("Loaded component:", Component);
             console.log("Loaded component:", componentModule.default);
-            const componentProps = { ...props, uniqID: uniqID };
+            const componentProps = { ...props };
             return React.createElement(Component, componentProps);
         } catch (error) {
             console.error("Error loading component:", error);
@@ -58,8 +54,9 @@ app.post("/ssr", async (req, res) => {
         console.log("SSR request data:", data);
 
         const element = await MyComponent(data);
-        console.log("SSR element:", element);
+
         const html = ReactDOMServer.renderToString(element);
+        console.log("SSR html:", html);
 
         res.json({ html });
     } catch (error) {
