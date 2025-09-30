@@ -1,31 +1,36 @@
-'use strict';
+"use strict";
 
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TSConfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
-const SOURCE_ROOT = __dirname + '/src/main/webpack';
+const SOURCE_ROOT = __dirname + "/src/main/webpack";
 
 const resolve = {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    plugins: [new TSConfigPathsPlugin({
-        configFile: './tsconfig.json'
-    })]
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    plugins: [
+        new TSConfigPathsPlugin({
+            configFile: "./tsconfig.json",
+        }),
+    ],
 };
 
 module.exports = {
     resolve: resolve,
     entry: {
-        site: SOURCE_ROOT + '/site/main.ts'
+        site: SOURCE_ROOT + "/site/main.ts",
     },
     output: {
-        filename: 'clientlib-[name]/index.js',
-        chunkFilename: 'clientlib-chunks/resources/chunks/[name].[chunkhash].chunk.js',
+        filename: (chunkData) => {
+            return `gen-clientlib-${chunkData.chunk.name}/[name].js`;
+        },
+        chunkFilename:
+            "gen-clientlib-chunks/resources/chunks/[name].[chunkhash].chunk.js",
         publicPath: `/etc.clientlibs/wknd/clientlibs/`,
-        path: path.join(process.cwd(), './dist')
+        path: path.join(process.cwd(), "./dist"),
     },
     module: {
         rules: [
@@ -37,74 +42,75 @@ module.exports = {
                         loader: "babel-loader",
                         options: {
                             presets: ["@babel/preset-react"],
-                        }
-                    }
-                ]
+                        },
+                    },
+                ],
             },
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: 'ts-loader'
+                        loader: "ts-loader",
                     },
                     {
-                        loader: 'glob-import-loader',
+                        loader: "glob-import-loader",
                         options: {
-                            resolve: resolve
-                        }
-                    }
-                ]
+                            resolve: resolve,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
-                            url: false
-                        }
+                            url: false,
+                        },
                     },
                     {
-                        loader: 'postcss-loader',
+                        loader: "postcss-loader",
                         options: {
                             plugins() {
-                                return [
-                                    require('autoprefixer')
-                                ];
-                            }
-                        }
+                                return [require("autoprefixer")];
+                            },
+                        },
                     },
                     {
-                        loader: 'sass-loader',
+                        loader: "sass-loader",
                     },
                     {
-                        loader: 'glob-import-loader',
+                        loader: "glob-import-loader",
                         options: {
-                            resolve: resolve
-                        }
-                    }
-                ]
-            }
-        ]
+                            resolve: resolve,
+                        },
+                    },
+                ],
+            },
+        ],
     },
     plugins: [
         new CleanWebpackPlugin(),
         new ESLintPlugin({
-            extensions: ['js', 'jsx', 'ts', 'tsx']
+            extensions: ["js", "jsx", "ts", "tsx"],
         }),
         new MiniCssExtractPlugin({
-            filename: 'clientlib-[name]/[name].css'
+            filename: "gen-clientlib-[name]/[name].css",
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: path.resolve(__dirname, SOURCE_ROOT + '/resources'), to: './clientlib-site/' }
-            ]
-        })
+                {
+                    from: path.resolve(__dirname, SOURCE_ROOT + "/resources"),
+                    to: "./gen-clientlib-site/",
+                },
+            ],
+        }),
     ],
     stats: {
-        assetsSort: 'chunks',
+        assetsSort: "chunks",
         builtAt: true,
         children: false,
         chunkGroups: true,
@@ -117,6 +123,6 @@ module.exports = {
         performance: true,
         providedExports: false,
         source: false,
-        warnings: true
+        warnings: true,
     },
 };
