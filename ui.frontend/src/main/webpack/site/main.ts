@@ -6,4 +6,5 @@ import "./main.scss";
 import "./**/*.js";
 import "./**/*.jsx";
 import "./**/*.ts";
-import '../components/**/*.js';
+// import '../components/**/*.js';
+

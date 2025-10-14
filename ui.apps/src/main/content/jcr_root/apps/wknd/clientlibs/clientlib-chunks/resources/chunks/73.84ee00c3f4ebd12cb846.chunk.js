@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaem_maven_archetype=self.webpackChunkaem_maven_archetype||[]).push([[73],{73:function(e,n,t){t.r(n);var c=t(294);n.default=e=>{console.log(e);return c.createElement("button",{onClick:()=>{console.log("click working")}},e.btnText)}}}]);

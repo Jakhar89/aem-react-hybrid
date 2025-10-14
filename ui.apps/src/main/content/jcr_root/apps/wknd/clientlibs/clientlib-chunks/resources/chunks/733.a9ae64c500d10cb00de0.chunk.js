@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaem_maven_archetype=self.webpackChunkaem_maven_archetype||[]).push([[733],{733:function(e,a,n){n.r(a);var t=n(294);a.default=e=>t.createElement("h1",null,"demo Content ",e.name||"World","!")}}]);
